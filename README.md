@@ -1,4 +1,4 @@
-vagrant-django-template
+vagrant-django-bower-template
 =======================
 
 A template for new Django 1.7 projects developed under Vagrant. Features offered include:
