@@ -56,7 +56,7 @@ fi
 cp -p $PROJECT_DIR/etc/install/bashrc /home/vagrant/.bashrc
 su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache"
 
-# Node.js, CoffeeScript and LESS
+# Node.js and Bower
 if ! command -v npm; then
     wget http://nodejs.org/dist/v0.10.0/node-v0.10.0.tar.gz
     tar xzf node-v0.10.0.tar.gz
@@ -64,14 +64,11 @@ if ! command -v npm; then
     ./configure && make && make install
     cd ..
     rm -rf node-v0.10.0/ node-v0.10.0.tar.gz
+    npm install -g npm
 fi
-if ! command -v coffee; then
-    npm install -g coffee-script
+if ! command -v bower; then
+    npm install -g bower
 fi
-if ! command -v lessc; then
-    npm install -g less
-fi
-
 # ---
 
 # postgresql setup for project
@@ -88,7 +85,7 @@ echo "workon $VIRTUALENV_NAME" >> /home/vagrant/.bashrc
 chmod a+x $PROJECT_DIR/manage.py
 
 # Django project setup
-su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./manage.py syncdb --noinput && ./manage.py migrate"
+su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./manage.py syncdb --noinput && ./manage.py migrate && bower install --noinput && ./manage.py collectstatic --clear --noinput"
 
 # Add settings/local.py to gitignore
 if ! grep -Fqx $LOCAL_SETTINGS_PATH $PROJECT_DIR/.gitignore

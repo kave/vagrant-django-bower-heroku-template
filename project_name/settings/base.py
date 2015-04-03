@@ -10,6 +10,7 @@ sys.path.append(os.path.join(PROJECT_ROOT, "lib"))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+PIPELINE_ENABLED = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -89,7 +90,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-    'compressor.finders.CompressorFinder',
+    'pipeline.finders.PipelineFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -126,7 +127,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'compressor',
+    'djangobower',
+    'pipeline',
     'debug_toolbar',
 
     'django.contrib.admin',
@@ -144,12 +146,6 @@ INTERNAL_IPS = ('127.0.0.1', '10.0.2.2')
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
-
-# django-compressor settings
-COMPRESS_PRECOMPILERS = (
-    ('text/coffeescript', 'coffee --compile --stdio'),
-    ('text/less', 'lessc --no-color {infile} {outfile}'),
-)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -177,5 +173,45 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+    }
+}
+
+# -------- Bower Configuration ------------ #
+BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'core/static')
+
+# -------- Django Pipeline Configurations ------------ #
+STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+
+# Default behavior is not to Compress
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+
+# Concat all CSS files.
+PIPELINE_CSS = {
+    # Project libraries.
+    'css': {
+        'source_filenames': (
+            'bower_components/bootstrap/dist/css/bootstrap.css',
+            'bower_components/font-awesome/css/font-awesome.css',
+            'css/*.css',
+        ),
+        # Compress passed libraries and have
+        # the output in`css/css.min.css`.
+        'output_filename': 'css/css.min.css',
+        'variant': 'datauri',
+    }
+}
+# Concat all JavaScript files.
+PIPELINE_JS = {
+    # Project JavaScript libraries.
+    'js': {
+        'source_filenames': (
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/bootstrap/dist/js/bootstrap.js',
+            'bower_components/underscore/underscore.js',
+            'js/compress/*.js',
+        ),
+        # Compress all passed files into `js/js.min.js`.
+        'output_filename': 'js/js.min.js',
     }
 }

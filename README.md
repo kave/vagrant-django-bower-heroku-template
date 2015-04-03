@@ -8,7 +8,7 @@ A template for new Django 1.7 projects developed under Vagrant. Features offered
 * A PostgreSQL database (with the same name as the project, pre-configured in the project settings file)
 * Separation of configuration settings into base.py, dev.py and production.py (and optionally local.py, kept outside
   of version control) as per http://www.sparklewise.com/django-settings-for-production-and-development-best-practices/
-* South, django-devserver, django-compressor, django-debug-toolbar out of the box
+* Django-devserver, django-pipeline, django-debug-toolbar, Bower Integration, Heroku Deployment Configurations, Production AWS S3 File Serving Configurations, Production CSS/JS Compression out of the box
 * A boilerplate base template with jquery included, and various other ideas and best practices borrowed from https://github.com/h5bp/html5-boilerplate
 
 Setup

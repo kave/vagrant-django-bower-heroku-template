@@ -1,6 +1,9 @@
 Django==1.7.1
 psycopg2==2.5.4
-django-compressor==1.4
 django-debug-toolbar==1.2.2
 gunicorn==19.1.1
 Fabric==1.10.0
+boto==2.36.0
+django-bower==5.0.2
+django-pipeline==1.4.6
+django-storages==1.1.8
