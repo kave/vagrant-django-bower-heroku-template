@@ -1,7 +1,6 @@
 /.vagrant
 *.pyc
-/face_it/settings/local.py
-*.idea
+/project_replace_name/settings/local.py
 bower_components
 .DS_Store
 MYENV

@@ -7,3 +7,4 @@ boto==2.36.0
 django-bower==5.0.2
 django-pipeline==1.4.6
 django-storages==1.1.8
+dj-database-url==0.3.0

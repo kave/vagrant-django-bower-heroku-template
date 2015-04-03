@@ -1,9 +1,9 @@
 {
-  "name": "{{ project_name }}",
+  "name": "project_replace_name",
   "version": "0.1.0",
   "dependencies": {
     "bootstrap": "~3.3.2",
-    "fontawesome": "~4.3.0"
+    "fontawesome": "~4.3.0",
     "underscore": "~1.8.2",
     "jquery": "~2.1.3"
   }

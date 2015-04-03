@@ -92,8 +92,7 @@ chmod a+x $PROJECT_DIR/manage.py
 # Django project setup
 su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./manage.py syncdb --noinput && ./manage.py migrate && bower install --noinput && ./manage.py collectstatic --clear --noinput"
 
-# Add settings/local.py to gitignore
-if ! grep -Fqx $LOCAL_SETTINGS_PATH $PROJECT_DIR/.gitignore
-then
-    echo $LOCAL_SETTINGS_PATH >> $PROJECT_DIR/.gitignore
-fi
+# Replace associated file names with project name
+find . -type f -name Procfile | xargs sed -i -e "s/project_replace_name/$PROJECT_NAME/g"
+find . -type f -name .gitignore | xargs sed -i -e "s/project_replace_name/$PROJECT_NAME/g"
+find . -type f -name "*.json" | xargs sed -i -e "s/project_replace_name/$PROJECT_NAME/g"
