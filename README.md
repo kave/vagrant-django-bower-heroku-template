@@ -1,5 +1,5 @@
 vagrant-django-bower-heroku-template
-=======================
+=======
 
 A template for new Django 1.7 projects developed under Vagrant. Features offered include:
 
