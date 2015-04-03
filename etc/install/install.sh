@@ -96,3 +96,7 @@ su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./man
 find . -type f -name Procfile | xargs sed -i -e "s/project_replace_name/$PROJECT_NAME/g"
 find . -type f -name .gitignore | xargs sed -i -e "s/project_replace_name/$PROJECT_NAME/g"
 find . -type f -name "*.json" | xargs sed -i -e "s/project_replace_name/$PROJECT_NAME/g"
+
+# Disabling default collectstatic on Heroku Deployment
+mkdir .heroku
+touch .heroku/collectstatic_disabled
