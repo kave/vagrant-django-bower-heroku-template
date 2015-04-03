@@ -3,11 +3,6 @@ import dj_database_url
 
 DEBUG = False
 
-try:
-    from .local import *
-except ImportError:
-    pass
-
 ALLOWED_HOSTS = ['*']
 
 DATABASES = {'default': dj_database_url.config()}

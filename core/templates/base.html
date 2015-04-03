@@ -1,5 +1,5 @@
 <!doctype html>
-{% load compress %}
+{% load pipeline %}
 
 {% comment %} paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ {% endcomment %}
 <!--[if lt IE 7]> <html class="lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
@@ -13,18 +13,16 @@
 
     <title></title>
 
-    {% compress css %}
-        {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
+    {% comment %}
+        Core CSS includes (for inclusion on all pages)
+        Django Pipeline Artifact css.min.css
+    {% endcomment %}
+    {% stylesheet 'css' %}
 
-    {% endcompress %}
-
-    {% compress css %}
-        {% comment %}
-            Per-page CSS is compressed separately so that the global stuff doesn't get re-downloaded each time 
-        {% endcomment %}
-        {% block extra_css %}{% endblock %}
-    {% endcompress %}
-
+    {% comment %}
+        Per-page CSS is compressed separately so that the global stuff doesn't get re-downloaded each time
+    {% endcomment %}
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     {% block content %}{% endblock %}
@@ -34,18 +32,15 @@
         http://developer.yahoo.com/performance/rules.html#js_bottom
     {% endcomment %}
 
-    {% compress js %}
-        {% comment %}
-            Core JS includes (for inclusion on all pages) to be specified here
-        {% endcomment %}
-        <script src="{{ STATIC_URL }}js/jquery-1.9.1.js"></script>
-    {% endcompress %}
+    {% comment %}
+        Core JS includes (for inclusion on all pages) to be specified here.
+        Django Pipeline Artifact js.min.js
+    {% endcomment %}
+    {% javascript 'js' %}
 
-    {% compress js %}
-        {% comment %}
-            Per-page JS is compressed separately so that the global stuff doesn't get re-downloaded each time 
-        {% endcomment %}
-        {% block extra_js %}{% endblock %}
-    {% endcompress %}
+    {% comment %}
+        Per-page JS is compressed separately so that the global stuff doesn't get re-downloaded each time
+    {% endcomment %}
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
