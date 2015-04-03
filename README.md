@@ -1,4 +1,4 @@
-vagrant-django-template
+vagrant-django-bower-heroku-template
 =======================
 
 A template for new Django 1.7 projects developed under Vagrant. Features offered include:
@@ -28,6 +28,15 @@ To start a new project, run the following commands:
 
 This will make the app accessible on the host machine as http://localhost:8111/ . The codebase is located on the host
 machine, exported to the VM as a shared folder; code editing and Git operations will generally be done on the host.
+
+Heroku Deployment
+-----
+* `heroku create {appName}`
+* `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`
+* `git push heroku master`
+* `heroku addons:add heroku-postgresql`
+* `heroku ps:scale web=1`
+* `heroku run python manage.py syncdb`
 
 See also
 --------

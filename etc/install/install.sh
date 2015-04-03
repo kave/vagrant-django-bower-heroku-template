@@ -69,6 +69,11 @@ fi
 if ! command -v bower; then
     npm install -g bower
 fi
+
+# Heroku CLI
+if ! command -v heroku; then
+    wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+fi
 # ---
 
 # postgresql setup for project
