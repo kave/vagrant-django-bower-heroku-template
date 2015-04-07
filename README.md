@@ -12,12 +12,12 @@ A template for new Django 1.7 projects developed under Vagrant. Features offered
 * A boilerplate base template with jquery included, and various other ideas and best practices borrowed from https://github.com/h5bp/html5-boilerplate
 
 Setup
------
+------------
 Install Django 1.7 on your host machine. (Be sure to explicitly uninstall earlier versions first, or use a virtualenv -
 having earlier versions around seems to cause pre-1.4-style settings.py and urls.py files to be generated alongside the
 new ones.)
 
-To start a new project, run the following commands:
+To start a new project with Vagrant, run the following commands:
 
     django-admin.py startproject --template https://github.com/kave/vagrant-django-bower-heroku-template/zipball/master --name=Vagrantfile myproject
     cd myproject
@@ -25,11 +25,22 @@ To start a new project, run the following commands:
     vagrant ssh
       (then, within the SSH session:)
     ./manage.py runserver 0.0.0.0:8000
+    
+To start a new project without Vagrant, run the following commands:
+
+    django-admin.py startproject --template https://github.com/kave/vagrant-django-bower-heroku-template/zipball/master --name=Vagrantfile myproject
+    cd myproject
+    mv $PROJECT_DIR/_heroku $PROJECT_DIR/.heroku    
 
 This will make the app accessible on the host machine as http://localhost:8111/ . The codebase is located on the host
 machine, exported to the VM as a shared folder; code editing and Git operations will generally be done on the host.
 
-Heroku Deployment
+Template Setup
+----------
+
+https://github.com/django/django/blob/master/django/core/management/templates.py#L129
+
+Heroku Deployment (After [Git Initialization](http://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository))
 -----
 * `heroku create {appName}`
 * `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`
@@ -40,6 +51,6 @@ Heroku Deployment
 
 See also
 --------
-https://github.com/torchbox/vagrant-django-base - a recipe for a Vagrant base box that can be used in place of precise32
+[vagrant-django-base](https://github.com/torchbox/vagrant-django-base)- a recipe for a Vagrant base box that can be used in place of precise32
 in the Vagrantfile - this has more of the server setup baked in, so that we can save time by not having to re-run those
 steps every time we create a new VM instance.

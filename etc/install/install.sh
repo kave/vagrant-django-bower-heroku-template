@@ -98,5 +98,4 @@ find . -type f -name .gitignore | xargs sed -i -e "s/project_replace_name/$PROJE
 find . -type f -name "*.json" | xargs sed -i -e "s/project_replace_name/$PROJECT_NAME/g"
 
 # Disabling default collectstatic on Heroku Deployment
-mkdir .heroku
-touch .heroku/collectstatic_disabled
+mv $PROJECT_DIR/_heroku $PROJECT_DIR/.heroku

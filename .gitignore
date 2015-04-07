@@ -5,3 +5,4 @@ bower_components
 .DS_Store
 MYENV
 node_modules
+.idea
