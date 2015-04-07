@@ -35,10 +35,6 @@ To start a new project without Vagrant, run the following commands:
 This will make the app accessible on the host machine as http://localhost:8111/ . The codebase is located on the host
 machine, exported to the VM as a shared folder; code editing and Git operations will generally be done on the host.
 
-Template Setup
-----------
-
-https://github.com/django/django/blob/master/django/core/management/templates.py#L129
 
 Heroku Deployment (After [Git Initialization](http://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository))
 -----
