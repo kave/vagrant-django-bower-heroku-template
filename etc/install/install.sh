@@ -26,6 +26,7 @@ export LC_ALL=en_US.UTF-8
 
 # Install essential packages from Apt
 apt-get update -y
+apt-get upgrade -y
 # Python dev packages
 apt-get install -y build-essential python python-dev python-setuptools python-software-properties software-properties-common
 # Dependencies for image processing with Pillow (drop-in replacement for PIL)
