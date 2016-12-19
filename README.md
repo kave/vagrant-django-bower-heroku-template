@@ -43,7 +43,7 @@ Heroku Deployment (After [Git Initialization](http://git-scm.com/book/en/v2/Git-
 * `git push heroku master`
 * `heroku addons:add heroku-postgresql`
 * `heroku ps:scale web=1`
-* `heroku run python manage.py syncdb`
+* `heroku run python manage.py migrate`
 
 See also
 --------
