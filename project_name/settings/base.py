@@ -10,7 +10,6 @@ sys.path.append(os.path.join(PROJECT_ROOT, "lib"))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-PIPELINE_ENABLED = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -96,28 +95,61 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '{{ secret_key }}'
 
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    # ...
+    'django.middleware.gzip.GZipMiddleware',
+    'pipeline.middleware.MinifyHTMLMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
+    # ...
+]
 
 ROOT_URLCONF = '{{ project_name }}.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+# Password validation
+# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -182,36 +214,32 @@ BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'core/static')
 # -------- Django Pipeline Configurations ------------ #
 STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
 
-# Default behavior is not to Compress
-PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+PIPELINE = {
+    'PIPELINE_ENABLED': True,
+    'STYLESHEETS': {
+        'css': {
+            'source_filenames': (
+                'bower_components/bootstrap/dist/css/bootstrap.css',
+                'bower_components/font-awesome/css/font-awesome.css',
+                'css/*.css',
+            ),
+            'output_filename': 'css/css.min.css',
+            'variant': 'datauri'
+        }
+    },
+    'JAVASCRIPT': {
+        'js': {
+            'source_filenames': (
+                'bower_components/jquery/dist/jquery.js',
+                'bower_components/bootstrap/dist/js/bootstrap.js',
+                'bower_components/underscore/underscore.js',
+                'js/compress/*.js',
+            ),
+            'output_filename': 'js/js.min.js'
+        }
+    }
+}
 
-# Concat all CSS files.
-PIPELINE_CSS = {
-    # Project libraries.
-    'css': {
-        'source_filenames': (
-            'bower_components/bootstrap/dist/css/bootstrap.css',
-            'bower_components/font-awesome/css/font-awesome.css',
-            'css/*.css',
-        ),
-        # Compress passed libraries and have
-        # the output in`css/css.min.css`.
-        'output_filename': 'css/css.min.css',
-        'variant': 'datauri',
-    }
-}
-# Concat all JavaScript files.
-PIPELINE_JS = {
-    # Project JavaScript libraries.
-    'js': {
-        'source_filenames': (
-            'bower_components/jquery/dist/jquery.js',
-            'bower_components/bootstrap/dist/js/bootstrap.js',
-            'bower_components/underscore/underscore.js',
-            'js/compress/*.js',
-        ),
-        # Compress all passed files into `js/js.min.js`.
-        'output_filename': 'js/js.min.js',
-    }
-}
+# Default behavior is not to Compress
+PIPELINE['CSS_COMPRESSOR'] = 'pipeline.compressors.NoopCompressor'
+PIPELINE['JS_COMPRESSOR'] = 'pipeline.compressors.NoopCompressor'
