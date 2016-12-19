@@ -27,9 +27,7 @@ export LC_ALL=en_US.UTF-8
 # Install essential packages from Apt
 apt-get update -y
 # Python dev packages
-apt-get install -y build-essential python python-dev
-# python-setuptools being installed manually
-wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | python
+apt-get install -y build-essential python python-dev python-setuptools
 # Dependencies for image processing with Pillow (drop-in replacement for PIL)
 # supporting: jpeg, tiff, png, freetype, littlecms
 # (pip install pillow to get pillow itself, it is not in requirements.txt)
@@ -58,12 +56,8 @@ su - vagrant -c "mkdir -p /home/vagrant/.pip_download_cache"
 
 # Node.js and Bower
 if ! command -v npm; then
-    wget http://nodejs.org/dist/v0.10.0/node-v0.10.0.tar.gz
-    tar xzf node-v0.10.0.tar.gz
-    cd node-v0.10.0/
-    ./configure && make && make install
-    cd ..
-    rm -rf node-v0.10.0/ node-v0.10.0.tar.gz
+    curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+    sudo apt-get install -y nodejs
     npm install -g npm
 fi
 if ! command -v bower; then
@@ -90,7 +84,7 @@ echo "workon $VIRTUALENV_NAME" >> /home/vagrant/.bashrc
 chmod a+x $PROJECT_DIR/manage.py
 
 # Django project setup
-su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./manage.py syncdb --noinput && ./manage.py migrate && bower install --noinput && ./manage.py collectstatic --clear --noinput"
+su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./manage.py migrate --noinput && bower install --noinput && ./manage.py collectstatic --clear --noinput"
 
 # Replace associated file names with project name
 find . -type f -name Procfile | xargs sed -i -e "s/project_replace_name/$PROJECT_NAME/g"
