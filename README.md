@@ -39,7 +39,7 @@ machine, exported to the VM as a shared folder; code editing and Git operations 
 Heroku Deployment (After [Git Initialization](http://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository))
 -----
 * `heroku create {appName}`
-* `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`
+* `heroku config:add BUILDPACK_URL=https://github.com/kave/heroku-buildpack-multi`
 * `git push heroku master`
 * `heroku addons:add heroku-postgresql`
 * `heroku ps:scale web=1`
